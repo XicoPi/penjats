@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="contenidorPortada">
+<body>
+  <br>
+  <h1 class="formulari">Login</h1>
+  <br>
+  <div class="colorform">
+  <form class="f1" id="FORMULARI" method="POST">
+    <br>
+    <label>Nom d'usuari:<br> </label>
+    <input name="username" id="username" type="text"
+	   required="required"/>
+
+    <br>
+    <label>Password:<br> </label>
+    <input name="password" id="password" type="password"
+	   required="required"/>
+
+    <br><br> 
+    <input type="submit" value="Login" id="boto_login"/>
+    <input type="reset" value="Delete" id="boto_reset"/>
+    <br><br>
+    <a href="{{ url_for('auth.register') }}">Register</a>
+
+
+</form>
+      <br>
+  </div>
+      <br>
+      <br>
+</div>
+
+{% endblock %}
