@@ -1,4 +1,4 @@
-use auth;
+use api;
 
 create table if not exists users (
        user_id int UNSIGNED primary key auto_increment,
@@ -8,5 +8,6 @@ create table if not exists users (
        pwd_salt char(32) not null,
        firstname varchar(40) not null,
        surname varchar(40) not null,
-       secondsurname varchar(40)
+       secondsurname varchar(40),
+       user_type char(10)
 );
