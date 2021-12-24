@@ -1,35 +1,65 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-<div class="contenidorPortada">
-<body>
-  <br>
-  <h1 class="formulari">Login</h1>
-  <br>
-  <div class="colorform">
-  <form class="f1" id="FORMULARI" method="POST">
-    <br>
-    <label>Nom d'usuari:<br> </label>
-    <input name="username" id="username" type="text"
-	   required="required"/>
+<div class="login container">
+  <div id="login-row" class="row justify-content-center align-items-center">
+    <div id="login-column" class="col-md-6">
+      <div id="login-box" class="col-md-12">
+	
+          <h3 class="text-center">Inici de Sessió</h3>
+          <div class="form-group">
+            <label for="email" class="">Nom d'usuari o email:</label><br>
+            <input type="text" name="email" id="email" class="form-control" required="required">
+          </div>
+          <div class="form-group">
+            <label for="pwd" class="password">Contrasenya:</label><br>
+            <input type="password" name="pwd" id="pwd" class="form-control" required="required">
+          </div>
+	  <div id="resp_msg"></div>
+          <div class="form-group">
+	    <label for="remember-me" class=""><span>Recordar</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
+            <button  class="btn btn-primary btn-md" onclick="login()">Entrar</button>
+          </div>
+          <div id="register-link" class="">
+            <a href="/register" class="">Registra't</a>
+          </div>
 
-    <br>
-    <label>Password:<br> </label>
-    <input name="password" id="password" type="password"
-	   required="required"/>
-
-    <br><br> 
-    <input type="submit" value="Login" id="boto_login"/>
-    <input type="reset" value="Delete" id="boto_reset"/>
-    <br><br>
-    <a href="{{ url_for('auth.register') }}">Register</a>
-
-
-</form>
-      <br>
+      </div>
+    </div>
   </div>
-      <br>
-      <br>
 </div>
+<script>
+  function login()
+  {
+      var request;
+      var email_obj, pwd_obj;
+      var resp_msg_obj = document.getElementById("resp_msg");
+      request = new XMLHttpRequest();
+      email_obj = document.getElementById("email");
+      pwd_obj = document.getElementById("pwd");
+      request.onreadystatechange=function()
+      {
+	  if (request.readyState == 4) {
+	      if (request.status == 404) {
+		  resp_msg_obj.innerHTML = "<p>Error d'usuari o contrasenya</p>";
+	      }
+	      else if (request.status == 200) {
+		  location.replace("/");
+	      }
+	      //else 
+	      //var req_obj = JSON.parse(request.responseText);
+	  }
+      }
+      request.open("POST", "/api/login", true);
+      var req_msg = JSON.stringify(
+	  {
+	      email: email.value,
+	      pwd: pwd.value
+	  }
+      )
+      request.send(req_msg);
+  }
+      
+</script>
 
 {% endblock %}

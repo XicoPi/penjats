@@ -1,46 +1,110 @@
 {% extends 'base/base.html'%}
 
 {% block content %}
-<div class="contenidorPortada">
+
 <body>
-  <br>
-  <h1 class="formulari">Registre un nou usuari</h1>
-  <div class="colorform">
-  <form class="f1" method="POST">
-    <br>
-    <label>Nom d'usuari:<br> </label>
-    <input name="username" id="username" type="text"
-	   required="required"/>
-    <br><br>
-    <label>Contrasenya:<br> </label>
-    <input name="password" id="pass" type="password"
-	   required="required"
-	   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="La contrasenya ha de tenir 8 o mes caracters, almenys un numero, almenys una majuscula, almenys una minuscula"
-	   />
+<div class="login container">
+  <div id="login-row" class="row justify-content-center align-items-center">
+    <div id="login-column" class="col-md-6">
+      <div id="login-box" class="col-md-12">
+	<h3 class="text-center">Registre un nou usuari</h3></br>
+	<div class="form-group">
+	  <label class="" for="firstname">Nom:</label></br>
+	  <input name="firstname" id="firstname" type="text" class="form-control"
+	   oninput=""/>
+	</div>
+	<div class="form-group">
+	  <label class="" for="surname">Cognom:</label></br>
+	  <input name="surname" id="surname" type="text" class="form-control"
+	   oninput=""/>
+	</div>
+	<div class="form-group">
+	  <label for="username">Email:</label></br>
+	  <input name="email" id="email" type="text" class="form-control" required="required"/>
+	</div>
+	<div class="form-group">
+	  <label for="username">Nom d'usuari:</label></br>
+	  <input name="username" id="username" type="text" class="form-control"
+		 required="required"/>
+	</div>
+	<div class="form-group">
+	  <label for="password" class="password">Contrasenya:</label></br>
+	  <input name="password" id="pwd_0" type="password" class="form-control"
+		 required="required"
+		 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="La contrasenya ha de tenir 8 o mes caracters, almenys un numero, almenys una majuscula, almenys una minuscula"
+		 />
 
-    <br><br>
-    <label>Repetir la contrasenya:<br> </label>
-    <input name="Repeticio_pwd" id="rep_pass" type="password"
+	</div>
+	<div class="form-group">
+	  <label class="password" for="password">Repetir la contrasenya:</label></br>
+	  <input name="pwd_1" id="pwd_1" type="password" class="form-control"
 	   oninput="check_pwd(this)"/>
-
-    <br><br>
-    <input type="submit" value="Enviar" id="boto_enviar"/>
-    <input type="reset" value="Esborrar" id="boto_reset"/>
-  </form>
-  <br>
-   </div>
-      <br>
-      <br>
+	</div>
+	
+	<div id="resp_msg"></div>
+	
+	<div class="form-group">
+	  <button type="submit" value="Enviar" id="boto_enviar" onclick="register()" class="btn btn-primary btn-md">Enviar</button>
+	</div>
+      </div>
+    </div>
+  </div>
 </div>
 <script>
-  function check_pwd(pass)
+  function check_pwd(pwd_1_obj)
   {
-      
-      if (document.getElementById("pass").value != pass.value) {
-	  pass.setCustomValidity("Contrasenyes no coincideixen");
+      var pwd_0_obj = document.getElementById("pwd_0");
+      var err_div = document.getElementById("resp_msg");
+      var result = false;
+      if (pwd_0_obj.value != pwd_1_obj.value) {
+	  err_div.innerHTML = "<p>Contrasenyes no coincidents</p>";
+	  result = false;
       }
       else {
-	  pass.setCustomValidity("");
+	  err_div.innerHTML = "";
+	  result = true
+      }
+      return result;
+  }
+  function register()
+  {
+      var request;
+      var firstname, surname, email_obj, pwd_0_obj, pwd_1_obj, username_obj;
+      var resp_msg_obj = document.getElementById("resp_msg");
+      request = new XMLHttpRequest();
+      email_obj = document.getElementById("email");
+      pwd_0_obj = document.getElementById("pwd_0");
+      pwd_1_obj = document.getElementById("pwd_1");
+      username_obj = document.getElementById("username");
+      firstname = document.getElementById("firstname");
+      surname = document.getElementById("surname");
+
+      if (check_pwd(pwd_1_obj)) {
+	  request.onreadystatechange=function()
+	  {
+	      if (request.readyState == 4) {
+		  if (request.status == 404) {
+		      resp_msg_obj.innerHTML = "<p>Error al registrar: "+ JSON.parse(request.responseText).error +"</p>";
+		  }
+		  if (request.status == 200) {
+		      location.replace("/");
+		  }
+		  //else 
+		  //var req_obj = JSON.parse(request.responseText);
+	      }
+	  }
+	  request.open("POST", "/api/register", true);
+	  var req_msg = JSON.stringify(
+	      {
+		  firstname: firstname.value,
+		  surname: surname.value,
+		  username: username.value,
+		  email: email.value,
+		  pwd_0: pwd_0.value,
+		  pwd_1: pwd_1.value
+	      }
+	  )
+	  request.send(req_msg);
       }
   }
 </script>
