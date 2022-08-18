@@ -1,0 +1,14 @@
+{
+    "name": string,
+    "nif": string,
+    "address": string,
+    "city": string,
+    "postal_code": string,
+    "phone_number": string,
+    "state": string
+}
+
+{
+    "name": "Associació Colla Castellera Penjats del Campus Manresa",
+    "nif": ""
+}

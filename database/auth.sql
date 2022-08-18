@@ -8,6 +8,7 @@ create table if not exists users (
        pwd_salt char(32) not null,
        firstname varchar(40) not null,
        surname varchar(40) not null,
+       mobile_phone varchar(25) not null,
        secondsurname varchar(40),
        user_type char(10)
 );

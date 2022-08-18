@@ -1,7 +1,8 @@
 use api;
 create table if not exists history_entries (
-       id int UNSIGNED primary key auto_increment,
+       entry_id int UNSIGNED primary key auto_increment,
        title text not null,
-       content not null,
-       user_id references users
+       content text not null,
+       creation_date timestamp not null,
+       author_id int UNSIGNED references users
 );
