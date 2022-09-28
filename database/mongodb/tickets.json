@@ -1,0 +1,26 @@
+{
+  "_id": {
+    "$oid": "62fe64e8ec8394a4daa42968"
+  },
+  "event": {
+    "id": {
+      "$oid": "62fe5769ec8394a4daa42954"
+    }
+  },
+  "products": [
+    {
+      "name": "Birra",
+      "quantity": 3,
+      "id": {
+        "$oid": "62fd49ac61513f4dc505bc88"
+      }
+    },
+    {
+      "name": "Sangria",
+      "quantity": 1,
+      "id": {
+        "$oid": "62fd4a2861513f4dc505bc89"
+      }
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+    "name": string,
+    "place": string,
+    "description": string,
+    "organicers": [
+	{
+	    id_n -> references company
+	}
+    ],
+    "edition": [
+	{
+	    "number": string || int,
+	    "start_date": timestamp,
+	    "end_date": timestamp
+	},
+	...
+    ],
+    "extras": []
+}
+
+{
+    "_id": {
+	"$oid": "62fe5769ec8394a4daa42954"
+    },
+    "name": "Diada Cultural",
+    "place": "EPSEM",
+    "description": "Festa de la UPC Manresa de primavera",
+    "organicers": [
+	{
+	    "$ref": "companies",
+	    "$id": ObjectId("62fe4e26ec8394a4daa4294e"),
+	    "$db": "test"
+	}
+    ],
+    "editions": [
+	{
+	    "number": "2023",
+	    "start_date": Timestamp(1682586000),
+	    "end_date": Timestamp(1682632800)
+	}
+    ],
+    "extras": []
+}
